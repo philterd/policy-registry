@@ -8,8 +8,8 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '30'))
     }
     parameters {
-        booleanParam(defaultValue: true, description: 'Build Docker and push to ECR', name: 'isDocker')
-        booleanParam(defaultValue: true, description: 'Build AMI', name: 'isAMI')
+        booleanParam(defaultValue: false, description: 'Build Docker and push to ECR', name: 'isDocker')
+        booleanParam(defaultValue: false, description: 'Build AMI', name: 'isAMI')
         booleanParam(defaultValue: false, description: 'Build Azure VHD', name: 'isAzure')
         booleanParam(defaultValue: true, description: 'Source Analysis', name: 'isAnalysis')
     }

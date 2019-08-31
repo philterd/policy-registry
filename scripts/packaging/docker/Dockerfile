@@ -30,13 +30,13 @@ RUN chown -R philter:philter /opt/filter-profile-registry \
 
 USER philter:philter
 
-RUN keytool -genkeypair -keypass Password123! -dname "CN=philter, O=philter, C=US" -alias philter -keyalg RSA -keysize 4096 -storepass Password123! -storetype PKCS12 -keystore /opt/philter/ssl/philter.p12 -validity 3650 \
-    && echo "\n" | tee -a /opt/philter/application.properties \
+RUN keytool -genkeypair -keypass Password123! -dname "CN=philter, O=philter, C=US" -alias filter-profile-registry -keyalg RSA -keysize 4096 -storepass Password123! -storetype PKCS12 -keystore /opt/philter/ssl/filter-profile-registry.p12 -validity 3650 \
+    && echo "\n" | tee -a /opt/filter-profile-registry/application.properties \
     && echo "# SSL certificate settings" | tee -a /opt/filter-profile-registry/application.properties \
     && echo "server.ssl.key-store-type=PKCS12" | tee -a /opt/filter-profile-registry/application.properties \
-    && echo "server.ssl.key-store=/opt/philter/ssl/philter.p12" | tee -a /opt/filter-profile-registry/application.properties \
+    && echo "server.ssl.key-store=/opt/filter-profile-registry/ssl/filter-profile-registry.p12" | tee -a /opt/filter-profile-registry/application.properties \
     && echo "server.ssl.key-store-password=Password123!" | tee -a /opt/filter-profile-registry/application.properties \
-    && echo "server.ssl.key-alias=philter" | tee -a /opt/filter-profile-registry/application.properties \
+    && echo "server.ssl.key-alias=filter-profile-registry" | tee -a /opt/filter-profile-registry/application.properties \
     && echo "security.require-ssl=true" | tee -a /opt/filter-profile-registry/application.properties
 
 EXPOSE 8080

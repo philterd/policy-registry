@@ -26,7 +26,7 @@ COPY files/NOTICE.txt /opt/filter-profile-registry/
 USER root:root
 
 RUN chown -R philter:philter /opt/filter-profile-registry \
-    && chmod +x /opt/philter/filter-profile-registry.jar
+    && chmod +x /opt/filter-profile-registry/filter-profile-registry.jar
 
 USER philter:philter
 

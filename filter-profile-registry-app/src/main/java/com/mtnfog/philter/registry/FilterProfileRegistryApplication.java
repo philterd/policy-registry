@@ -1,6 +1,6 @@
 package com.mtnfog.philter.registry;
 
-import com.mtnfog.philter.model.services.FilterProfileService;
+import com.mtnfog.philter.registry.services.FilterProfileService;
 import com.mtnfog.philter.registry.services.LocalFilterProfileService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -2,7 +2,7 @@ package com.mtnfog.philter.registry.services;
 
 import com.google.gson.Gson;
 import com.mtnfog.philter.model.profile.FilterProfile;
-import com.mtnfog.philter.model.services.FilterProfileService;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,14 +52,14 @@ public class LocalFilterProfileService implements FilterProfileService {
     }
 
     @Override
-    public String get(String name) throws IOException {
+    public String get(String filterProfileName) throws IOException {
 
-        final File file = new File(filterProfilesDirectory, name+ ".json");
+        final File file = new File(filterProfilesDirectory, filterProfileName + ".json");
 
         if(file.exists()) {
             return FileUtils.readFileToString(file, Charset.defaultCharset());
         } else {
-            throw new IOException("Filter profile with name " + name + " does not exist.");
+            throw new IOException("Filter profile with name " + filterProfileName + " does not exist.");
         }
 
     }

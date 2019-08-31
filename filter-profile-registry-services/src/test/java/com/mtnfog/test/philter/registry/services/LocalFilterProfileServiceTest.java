@@ -7,7 +7,7 @@ import com.mtnfog.philter.model.profile.filters.Age;
 import com.mtnfog.philter.model.profile.filters.CreditCard;
 import com.mtnfog.philter.model.profile.filters.strategies.rules.AgeFilterStrategy;
 import com.mtnfog.philter.model.profile.filters.strategies.rules.CreditCardFilterStrategy;
-import com.mtnfog.philter.model.services.FilterProfileService;
+import com.mtnfog.philter.registry.services.FilterProfileService;
 import com.mtnfog.philter.registry.services.LocalFilterProfileService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

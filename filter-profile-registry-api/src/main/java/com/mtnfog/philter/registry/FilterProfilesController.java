@@ -1,6 +1,6 @@
 package com.mtnfog.philter.registry;
 
-import com.mtnfog.philter.model.services.FilterProfileService;
+import com.mtnfog.philter.registry.services.FilterProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

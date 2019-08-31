@@ -5,7 +5,7 @@ MAINTAINER Mountain Fog "support@mtnfog.com"
 ARG GID=55
 
 RUN mkdir -p /opt/filter-profile-registry \
-    && mkdir -p /opt/filter-profile-registry/ssl
+    && mkdir -p /opt/filter-profile-registry/ssl \
     && yum upgrade -y \
     && yum install -y shadow-utils.x86_64 python3 python3-devel gcc
 

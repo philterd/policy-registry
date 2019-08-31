@@ -24,7 +24,7 @@ eval $(aws ecr get-login --region us-east-1 --no-include-email)
 docker tag mtnfog/$PROJECT:$FULL_VERSION 341239660749.dkr.ecr.us-east-1.amazonaws.com/mtnfog/$PROJECT:$FULL_VERSION
 docker push 341239660749.dkr.ecr.us-east-1.amazonaws.com/mtnfog/$PROJECT:$FULL_VERSION
 
-docker tag mtnfog/$PROJECT:latest 341239660749.dkr.ecr.us-east-1.amazonaws.com/mtnfog/$PROJECT:latest
+docker tag mtnfog/$PROJECT:$FULL_VERSION 341239660749.dkr.ecr.us-east-1.amazonaws.com/mtnfog/$PROJECT:latest
 docker push 341239660749.dkr.ecr.us-east-1.amazonaws.com/mtnfog/$PROJECT:latest
 
 docker logout

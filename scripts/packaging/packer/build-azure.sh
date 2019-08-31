@@ -6,8 +6,6 @@ set -e
 
 # https://docs.microsoft.com/en-us/azure/virtual-machines/linux/build-image-with-packer
 
-echo "Getting info from the pom.xml."
-PROJECT=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.artifactId -f ../../../pom.xml | egrep -v '^\[|Downloading:' | tr -d ' \n'`
 BUILD_NUMBER=${1:-000}
 
 VERSION=$2
@@ -16,6 +14,8 @@ then
   VERSION=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.version -f ../../../pom.xml | egrep -v '^\[|Downloading:' | tr -d ' \n'`
 fi
 
+echo "Getting info from the pom.xml."
+PROJECT=`mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=project.artifactId -f ../../../pom.xml | egrep -v '^\[|Downloading:' | tr -d ' \n'`
 FULL_VERSION=`echo "$VERSION.$BUILD_NUMBER" | tr '[:upper:]' '[:lower:]'`
 FORMATTED_VERSION=`echo $FULL_VERSION | sed 's/\./-/g'`
 
@@ -33,4 +33,4 @@ PACKER_LOG=1 PACKER_LOG_PATH=packer.log packer build \
   -var "ssh_username=packer" \
   -var "working_directory=../../../distribution" \
   -var "azure_client_secret=$AZURE_CLIENT_SECRET" \
-  ./philter.json
+  ./$PROJECT.json

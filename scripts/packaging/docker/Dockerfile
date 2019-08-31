@@ -30,7 +30,7 @@ RUN chown -R philter:philter /opt/filter-profile-registry \
 
 USER philter:philter
 
-RUN keytool -genkeypair -keypass Password123! -dname "CN=philter, O=philter, C=US" -alias filter-profile-registry -keyalg RSA -keysize 4096 -storepass Password123! -storetype PKCS12 -keystore /opt/philter/ssl/filter-profile-registry.p12 -validity 3650 \
+RUN keytool -genkeypair -keypass Password123! -dname "CN=philter, O=philter, C=US" -alias filter-profile-registry -keyalg RSA -keysize 4096 -storepass Password123! -storetype PKCS12 -keystore /opt/filter-profile-registry/ssl/filter-profile-registry.p12 -validity 3650 \
     && echo "\n" | tee -a /opt/filter-profile-registry/application.properties \
     && echo "# SSL certificate settings" | tee -a /opt/filter-profile-registry/application.properties \
     && echo "server.ssl.key-store-type=PKCS12" | tee -a /opt/filter-profile-registry/application.properties \

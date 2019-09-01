@@ -24,16 +24,15 @@ public class RestApiExceptions {
 	@ExceptionHandler({BadRequestException.class, InvalidFilterProfile.class, MissingServletRequestParameterException.class, HttpMessageNotReadableException.class})
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public String handleMissingParameterException(Exception ex) {
-		final String message = "A required parameter is missing or contains an invalid value.";
-		LOGGER.error(message, ex);
-		return message;
+		LOGGER.error("A parameter was missing or invalid.", ex);
+		return ex.getMessage();
 	}
 
 	@ResponseBody
 	@ExceptionHandler(FileNotFoundException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public String handleNotFound(Exception ex) {
-		final String message = "The resource was not found.";
+		final String message = "The requested resource was not found.";
 		LOGGER.error(message, ex);
 		return message;
 	}

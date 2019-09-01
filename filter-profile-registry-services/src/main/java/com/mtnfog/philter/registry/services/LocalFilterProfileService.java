@@ -1,8 +1,9 @@
 package com.mtnfog.philter.registry.services;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.mtnfog.philter.model.exceptions.api.BadRequestException;
 import com.mtnfog.philter.model.profile.FilterProfile;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -91,11 +92,20 @@ public class LocalFilterProfileService implements FilterProfileService {
     @Override
     public void save(String filterProfileJson) throws IOException {
 
-        final FilterProfile filterProfile = gson.fromJson(filterProfileJson, FilterProfile.class);
+        try {
 
-        final File file = new File(filterProfilesDirectory, filterProfile.getName() + ".json");
+            final FilterProfile filterProfile = gson.fromJson(filterProfileJson, FilterProfile.class);
 
-        FileUtils.writeStringToFile(file, filterProfileJson, Charset.defaultCharset());
+            final File file = new File(filterProfilesDirectory, filterProfile.getName() + ".json");
+
+            FileUtils.writeStringToFile(file, filterProfileJson, Charset.defaultCharset());
+
+        } catch (JsonSyntaxException ex) {
+
+            LOGGER.error("The provided filter profile is not valid.", ex);
+            throw new BadRequestException("The provided filter profile is not valid.");
+
+        }
 
     }
 

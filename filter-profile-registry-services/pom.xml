@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.mtnfog</groupId>
 		<artifactId>filter-profile-registry</artifactId>
-		<version>0.9.3-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>filter-profile-registry-services</artifactId>
 	<name>filter-profile-registry-services</name>

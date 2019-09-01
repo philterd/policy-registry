@@ -9,7 +9,7 @@
 	<artifactId>filter-profile-registry</artifactId>
 	<groupId>com.mtnfog</groupId>
 	<packaging>pom</packaging>
-	<version>0.9.3-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>filter-profile-registry</name>
 	<url>http://www.mtnfog.com</url>
 	<description>Stores and manages filter profiles.</description>

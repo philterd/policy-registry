@@ -1,5 +1,6 @@
 package com.mtnfog.philter.registry;
 
+import com.mtnfog.philter.model.api.Status;
 import com.mtnfog.philter.registry.services.FilterProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,8 @@ import java.util.List;
 
 @Controller
 public class FilterProfilesController {
+
+    private static final String HEALTHY = "Healthy";
 
     @Autowired
     private FilterProfileService filterProfileService;
@@ -52,6 +55,14 @@ public class FilterProfilesController {
         filterProfileService.delete(filterProfileName);
 
         return ResponseEntity.status(HttpStatus.OK).build();
+
+    }
+
+    @RequestMapping(value="/api/status", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Status> status() {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new Status(HEALTHY));
 
     }
 

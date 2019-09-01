@@ -8,7 +8,7 @@
     "version": "",
     "working_directory": "",
     "iam_instance_profile": "",
-    "instance_type": "t3.large",
+    "instance_type": "t3.micro",
     "region": "us-east-1",
     "source_ami": "",
     "source_ami_description": "",
@@ -76,68 +76,43 @@
     {
       "type": "shell",
       "inline": [
-        "sudo mkdir -p /opt/philter/ssl",
-        "sudo mkdir -p /opt/philter/indexes",
+        "sudo mkdir -p /opt/filter-profile-registry/ssl",
+        "sudo mkdir -p /opt/filter-profile-registry/indexes",
         "sudo useradd --system --create-home --gid philter philter",
         "sudo usermod --lock --shell /sbin/nologin philter",
         "sudo chage -E0 philter",
-        "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/philter -R"
+        "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/filter-profile-registry -R"
       ]
     },
     {
       "type": "file",
-      "destination": "/opt/philter/philter.jar",
-      "source": "{{user `working_directory`}}/philter.jar"
+      "destination": "/opt/filter-profile-registry/filter-profile-registry.jar",
+      "source": "{{user `working_directory`}}/filter-profile-registry.jar"
     },
     {
       "type": "file",
-      "destination": "/opt/philter/indexes/",
-      "source": "{{user `working_directory`}}/indexes/"
-    },
-    {
-      "type": "file",
-      "destination": "/opt/philter/application.properties",
+      "destination": "/opt/filter-profile-registry/application.properties",
       "source": "{{user `working_directory`}}/application.properties"
     },
     {
       "type": "file",
-      "destination": "/opt/philter/README.txt",
+      "destination": "/opt/filter-profile-registry/README.txt",
       "source": "{{user `working_directory`}}/README.txt"
     },
     {
       "type": "file",
-      "destination": "/opt/philter/NOTICE.txt",
+      "destination": "/opt/filter-profile-registry/NOTICE.txt",
       "source": "{{user `working_directory`}}/NOTICE.txt"
     },
     {
       "type": "file",
-      "destination": "/opt/philter/LICENSE.txt",
+      "destination": "/opt/filter-profile-registry/LICENSE.txt",
       "source": "{{user `working_directory`}}/LICENSE.txt"
     },
     {
       "type": "file",
-      "destination": "/opt/philter/philter.conf",
+      "destination": "/opt/filter-profile-registry/philter.conf",
       "source": "{{user `working_directory`}}/philter.conf"
-    },
-    {
-      "type": "file",
-      "destination": "/opt/philter/bert.py",
-      "source": "{{user `working_directory`}}/bert.py"
-    },
-    {
-      "type": "file",
-      "destination": "/opt/philter/service.py",
-      "source": "{{user `working_directory`}}/service.py"
-    },
-    {
-      "type": "file",
-      "destination": "/tmp/requirements.txt",
-      "source": "{{user `working_directory`}}/requirements.txt"
-    },
-    {
-      "type": "file",
-      "destination": "/opt/philter/model",
-      "source": "{{user `working_directory`}}/model"
     },
     {
       "type": "shell",
@@ -150,50 +125,35 @@
     {
       "type": "shell",
       "inline": [
-        "# Install python required packages.",
-        "sudo yum install -y python3 python3-devel gcc",
-        "echo \"Installing from requirements.txt\"",
-        "sudo -u philter pip3 install --user -r /tmp/requirements.txt",
-        "echo \"Installing nltk all\"",
-        "sudo -u philter python3 -m nltk.downloader all",
-        "echo \"Downloading model from S3\"",
-        "aws s3 cp s3://mtnfog-philter/pytorch_model.bin /opt/philter/model/pytorch_model.bin",
-        "echo \"cd /opt/philter/ && sudo -u philter python3 service.py &\" | sudo tee -a /etc/rc.d/rc.local",
-        "sudo chmod +x /etc/rc.d/rc.local"
+        "sudo keytool -genkeypair -keypass Password123! -dname \"CN=philter, O=philter, C=US\" -alias philter -keyalg RSA -keysize 4096 -storepass Password123! -storetype PKCS12 -keystore /opt/filter-profile-registry/ssl/filter-profile-registry.p12 -validity 3650",
+        "echo \"\n\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"# SSL certificate settings\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"server.ssl.key-store-type=PKCS12\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"server.ssl.key-store=/opt/filter-profile-registry/ssl/filter-profile-registry.p12\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"server.ssl.key-store-password=Password123!\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"server.ssl.key-alias=philter\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"security.require-ssl=true\" | sudo tee -a /opt/filter-profile-registry/application.properties"
       ]
     },
     {
       "type": "shell",
       "inline": [
-        "sudo keytool -genkeypair -keypass Password123! -dname \"CN=philter, O=philter, C=US\" -alias philter -keyalg RSA -keysize 4096 -storepass Password123! -storetype PKCS12 -keystore /opt/philter/ssl/philter.p12 -validity 3650",
-        "echo \"\n\" | sudo tee -a /opt/philter/application.properties",
-        "echo \"# SSL certificate settings\" | sudo tee -a /opt/philter/application.properties",
-        "echo \"server.ssl.key-store-type=PKCS12\" | sudo tee -a /opt/philter/application.properties",
-        "echo \"server.ssl.key-store=/opt/philter/ssl/philter.p12\" | sudo tee -a /opt/philter/application.properties",
-        "echo \"server.ssl.key-store-password=Password123!\" | sudo tee -a /opt/philter/application.properties",
-        "echo \"server.ssl.key-alias=philter\" | sudo tee -a /opt/philter/application.properties",
-        "echo \"security.require-ssl=true\" | sudo tee -a /opt/philter/application.properties"
-      ]
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/philter/ -R",
-        "sudo chmod +x /opt/philter/philter.jar",
-        "sudo ln -s /opt/philter/philter.jar /etc/init.d/philter",
-        "sudo chkconfig philter on"
+        "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/filter-profile-registry/ -R",
+        "sudo chmod +x /opt/philter/filter-profile-registry.jar",
+        "sudo ln -s /opt/philter/philter.jar /etc/init.d/filter-profile-registry",
+        "sudo chkconfig filter-profile-registry on"
       ]
     },
     {
       "type": "shell",
       "inline": [
         "# Set permissions and ownership.",
-        "sudo chmod 500 /opt/philter/philter.jar",
-        "sudo chmod 644 /opt/philter/philter.conf",
-        "sudo chmod 644 /opt/philter/application.properties",
-        "sudo chmod 644 /opt/philter/LICENSE.txt",
-        "sudo chmod 644 /opt/philter/NOTICE.txt",
-        "sudo chmod 644 /opt/philter/README.txt",
+        "sudo chmod 500 /opt/filter-profile-registry/filter-profile-registry.jar",
+        "sudo chmod 644 /opt/filter-profile-registry/filter-profile-registry.conf",
+        "sudo chmod 644 /opt/filter-profile-registry/application.properties",
+        "sudo chmod 644 /opt/filter-profile-registry/LICENSE.txt",
+        "sudo chmod 644 /opt/filter-profile-registry/NOTICE.txt",
+        "sudo chmod 644 /opt/filter-profile-registry/README.txt",
         "sudo chown philter:philter /opt/philter -R"
       ]
     },

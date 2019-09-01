@@ -4,6 +4,9 @@ pipeline {
         maven 'maven-3.6.0'
         jdk 'amazon-corretto-11'
     }
+    triggers {
+        pollSCM 'H/10 * * * *'
+    }
     options {
         buildDiscarder(logRotator(numToKeepStr: '30'))
     }

@@ -18,7 +18,7 @@ public class FilterProfilesController {
     private FilterProfileService filterProfileService;
 
     @RequestMapping(value="/api/profiles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<List<String>> get() throws IOException {
+    public @ResponseBody ResponseEntity<List<String>> getFilterProfileNames() throws IOException {
 
         final List<String> filterProfileNames = filterProfileService.get();
 
@@ -28,7 +28,7 @@ public class FilterProfilesController {
     }
 
     @RequestMapping(value="/api/profiles", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<String> get(@RequestParam(value="p") String filterProfileName) throws IOException {
+    public @ResponseBody ResponseEntity<String> getFilterProfile(@RequestParam(value="p") String filterProfileName) throws IOException {
 
         final String filterProfile = filterProfileService.get(filterProfileName);
 

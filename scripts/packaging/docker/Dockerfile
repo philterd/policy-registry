@@ -1,20 +1,12 @@
-FROM amazoncorretto:11
+FROM 341239660749.dkr.ecr.us-east-1.amazonaws.com/mtnfog/philter-base-java8
 
 MAINTAINER Mountain Fog "support@mtnfog.com"
-
-ARG GID=55
-ARG USER=fpr
 
 RUN mkdir -p /opt/filter-profile-registry \
     && mkdir -p /opt/filter-profile-registry/ssl \
     && mkdir -p /opt/filter-profile-registry/profiles \
     && yum upgrade -y \
     && yum install -y shadow-utils.x86_64 python3 python3-devel gcc
-
-RUN groupadd -g $GID $USER || groupmod -n $USER `getent group $GID | cut -d: -f1` \
-    && useradd --system --create-home --gid $USER $USER \
-    && usermod --lock --shell /sbin/nologin $USER \
-    && chage -E0 $USER
 
 USER $USER:$USER
 

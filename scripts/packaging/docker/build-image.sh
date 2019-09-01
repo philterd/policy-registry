@@ -27,8 +27,11 @@ cp ../../../distribution/README.txt ./files/
 cp ../../../distribution/LICENSE.txt ./files/
 cp ../../../distribution/NOTICE.txt ./files/
 
-echo "Building image mtnfog/$PROJECT:$FULL_VERSION"
+eval $(aws ecr get-login --region us-east-1 --no-include-email)
 
+echo "Building image mtnfog/$PROJECT:$FULL_VERSION"
 docker build -t mtnfog/$PROJECT:$FULL_VERSION .
+
+docker logout
 
 rm -rf ./files/

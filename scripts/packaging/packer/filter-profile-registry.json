@@ -17,7 +17,8 @@
     "vpc_id": "vpc-3da1cb58",
     "built_by": "manual",
     "application": "",
-    "project_name": "filter-profile-registry"
+    "project_name": "filter-profile-registry",
+    "local_user_name": "fpr"
   },
   "builders": [
     {
@@ -79,8 +80,8 @@
       "inline": [
         "sudo mkdir -p /opt/{{user `project_name`}}/ssl",
         "sudo mkdir -p /opt/{{user `project_name`}}/indexes",
-        "sudo useradd --system --create-home --gid fpr fpr",
-        "sudo usermod --lock --shell /sbin/nologin fpr",
+        "sudo useradd --system --create-home --gid {{user `local_user_name`}} {{user `local_user_name`}}",
+        "sudo usermod --lock --shell /sbin/nologin {{user `local_user_name`}}",
         "sudo chage -E0 fpr",
         "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/{{user `project_name`}} -R"
       ]
@@ -132,7 +133,7 @@
         "echo \"server.ssl.key-store-type=PKCS12\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
         "echo \"server.ssl.key-store=/opt/{{user `project_name`}}/ssl/{{user `project_name`}}.p12\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
         "echo \"server.ssl.key-store-password=Password123!\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
-        "echo \"server.ssl.key-alias=fpr\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
+        "echo \"server.ssl.key-alias={{user `local_user_name`}}\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
         "echo \"security.require-ssl=true\" | sudo tee -a /opt/{{user `project_name`}}/application.properties"
       ]
     },
@@ -149,13 +150,13 @@
       "type": "shell",
       "inline": [
         "# Set permissions and ownership.",
-        "sudo chmod 500 /opt/{{user `project_name`}}/{{user `project_name`}}.jar",
-        "sudo chmod 644 /opt/{{user `project_name`}}/{{user `project_name`}}.conf",
-        "sudo chmod 644 /opt/{{user `project_name`}}/application.properties",
-        "sudo chmod 644 /opt/{{user `project_name`}}/LICENSE.txt",
-        "sudo chmod 644 /opt/{{user `project_name`}}/NOTICE.txt",
-        "sudo chmod 644 /opt/{{user `project_name`}}/README.txt",
-        "sudo chown fpr:fpr /opt/{{user `project_name`}} -R"
+        "sudo chmod 500 /opt/{{user `local_user_name`}}/{{user `project_name`}}.jar",
+        "sudo chmod 644 /opt/{{user `local_user_name`}}/{{user `project_name`}}.conf",
+        "sudo chmod 644 /opt/{{user `local_user_name`}}/application.properties",
+        "sudo chmod 644 /opt/{{user `local_user_name`}}/LICENSE.txt",
+        "sudo chmod 644 /opt/{{user `local_user_name`}}/NOTICE.txt",
+        "sudo chmod 644 /opt/{{user `local_user_name`}}/README.txt",
+        "sudo chown {{user `local_user_name`}}:{{user `local_user_name`}} /opt/{{user `project_name`}} -R"
       ]
     },
     {

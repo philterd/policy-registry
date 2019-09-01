@@ -79,10 +79,10 @@
       "type": "shell",
       "inline": [
         "sudo mkdir -p /opt/{{user `project_name`}}/ssl",
-        "sudo mkdir -p /opt/{{user `project_name`}}/indexes",
+        "sudo groupadd {{user `local_user_name`}}",
         "sudo useradd --system --create-home --gid {{user `local_user_name`}} {{user `local_user_name`}}",
         "sudo usermod --lock --shell /sbin/nologin {{user `local_user_name`}}",
-        "sudo chage -E0 fpr",
+        "sudo chage -E0 {{user `local_user_name`}}",
         "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/{{user `project_name`}} -R"
       ]
     },

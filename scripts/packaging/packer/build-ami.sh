@@ -35,7 +35,7 @@ PACKER_LOG=1 PACKER_LOG_PATH=packer.log packer build \
   -var "source_ami=$SOURCE_AMI" \
   -var "version=$FULL_VERSION" \
   -var "commit=$GIT_COMMIT" \
-  -var "ami_name=$FORMATTED_PROJECT $FULL_VERSION $TIMESTAMP" \
+  -var "ami_name=$PROJECT $FULL_VERSION $TIMESTAMP" \
   -var "working_directory=$WORKINGDIRECTORY" \
   -var "built_by=$BUILT_BY" \
   -var "application=$PROJECT" \

@@ -27,8 +27,8 @@ public class FilterProfilesController {
 
     }
 
-    @RequestMapping(value="/api/profiles", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<String> getFilterProfile(@RequestParam(value="p") String filterProfileName) throws IOException {
+    @RequestMapping(value="/api/profiles/{filterProfileName}", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<String> getFilterProfile(@PathVariable String filterProfileName) throws IOException {
 
         final String filterProfile = filterProfileService.get(filterProfileName);
 
@@ -37,7 +37,7 @@ public class FilterProfilesController {
 
     }
 
-    @RequestMapping(value="/api/profiles", method=RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/api/profiles", method=RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<Void> save(@RequestBody String filterProfile) throws IOException {
 
         filterProfileService.save(filterProfile);
@@ -46,8 +46,8 @@ public class FilterProfilesController {
 
     }
 
-    @RequestMapping(value="/api/profiles", method=RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Void> delete(@RequestParam(value="p") String filterProfileName) throws IOException {
+    @RequestMapping(value="/api/profiles/{filterProfileName}", method=RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<Void> delete(@PathVariable String filterProfileName) throws IOException {
 
         filterProfileService.delete(filterProfileName);
 

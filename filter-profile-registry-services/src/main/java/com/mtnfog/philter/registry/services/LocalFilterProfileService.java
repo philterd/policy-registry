@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
@@ -59,7 +60,7 @@ public class LocalFilterProfileService implements FilterProfileService {
         if(file.exists()) {
             return FileUtils.readFileToString(file, Charset.defaultCharset());
         } else {
-            throw new IOException("Filter profile with name " + filterProfileName + " does not exist.");
+            throw new FileNotFoundException("Filter profile with name " + filterProfileName + " does not exist.");
         }
 
     }
@@ -106,7 +107,7 @@ public class LocalFilterProfileService implements FilterProfileService {
         if(file.exists()) {
             file.delete();
         } else {
-            throw new IOException("Filter profile with name " + name + " does not exist.");
+            throw new FileNotFoundException("Filter profile with name " + name + " does not exist.");
         }
 
     }

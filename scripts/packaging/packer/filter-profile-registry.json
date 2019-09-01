@@ -150,12 +150,12 @@
       "type": "shell",
       "inline": [
         "# Set permissions and ownership.",
-        "sudo chmod 500 /opt/{{user `local_user_name`}}/{{user `project_name`}}.jar",
-        "sudo chmod 644 /opt/{{user `local_user_name`}}/{{user `project_name`}}.conf",
-        "sudo chmod 644 /opt/{{user `local_user_name`}}/application.properties",
-        "sudo chmod 644 /opt/{{user `local_user_name`}}/LICENSE.txt",
-        "sudo chmod 644 /opt/{{user `local_user_name`}}/NOTICE.txt",
-        "sudo chmod 644 /opt/{{user `local_user_name`}}/README.txt",
+        "sudo chmod 500 /opt/{{user `project_name`}}/{{user `project_name`}}.jar",
+        "sudo chmod 644 /opt/{{user `project_name`}}/{{user `project_name`}}.conf",
+        "sudo chmod 644 /opt/{{user `project_name`}}/application.properties",
+        "sudo chmod 644 /opt/{{user `project_name`}}/LICENSE.txt",
+        "sudo chmod 644 /opt/{{user `project_name`}}/NOTICE.txt",
+        "sudo chmod 644 /opt/{{user `project_name`}}/README.txt",
         "sudo chown {{user `local_user_name`}}:{{user `local_user_name`}} /opt/{{user `project_name`}} -R"
       ]
     },

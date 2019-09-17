@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.naming.ServiceUnavailableException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @ControllerAdvice
@@ -24,25 +24,26 @@ public class RestApiExceptions {
 	@ExceptionHandler({BadRequestException.class, InvalidFilterProfile.class, MissingServletRequestParameterException.class, HttpMessageNotReadableException.class})
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public String handleMissingParameterException(Exception ex) {
-		final String message = "A required parameter is missing or contains an invalid value.";
-		LOGGER.error(message, ex);
-		return message;
+		LOGGER.error("A parameter was missing or invalid.", ex);
+		return ex.getMessage();
 	}
 
 	@ResponseBody
-	@ExceptionHandler(ServiceUnavailableException.class)
-	@ResponseStatus(value = HttpStatus.SERVICE_UNAVAILABLE)
-	public String handleServiceUnavailableException(ServiceUnavailableException ex) {
-		LOGGER.error("The API is disabled.", ex);
-	    return ex.getMessage();
+	@ExceptionHandler(FileNotFoundException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public String handleNotFound(Exception ex) {
+		final String message = "The requested resource was not found.";
+		LOGGER.error(message, ex);
+		return message;
 	}
 
 	@ResponseBody
 	@ExceptionHandler({IOException.class, Exception.class})
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public String handleUnknownException(Exception ex) {
-		LOGGER.error("An unknown error has occurred.", ex);
-	    return "An unknown error has occurred.";
+		final String message = "An unknown error has occurred. Check the server log.";
+		LOGGER.error(message, ex);
+	    return message;
 	}
 	
 }

@@ -9,7 +9,7 @@
 	<artifactId>filter-profile-registry</artifactId>
 	<groupId>com.mtnfog</groupId>
 	<packaging>pom</packaging>
-	<version>0.9.3-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>filter-profile-registry</name>
 	<url>http://www.mtnfog.com</url>
 	<description>Stores and manages filter profiles.</description>
@@ -95,7 +95,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- Philter version -->
-		<philter.version>0.9.3-SNAPSHOT</philter.version>
+		<philter.version>1.0.0-SNAPSHOT</philter.version>
 		<!-- Project dependency versions -->
 		<aws.version>1.11.620</aws.version>
 		<commons.collections4.version>4.4</commons.collections4.version>

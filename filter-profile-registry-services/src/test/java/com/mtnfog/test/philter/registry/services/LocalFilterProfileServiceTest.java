@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -138,12 +139,12 @@ public class LocalFilterProfileServiceTest {
         AgeFilterStrategy ageFilterStrategy = new AgeFilterStrategy();
 
         Age age = new Age();
-        age.setAgeFilterStrategy(ageFilterStrategy);
+        age.setAgeFilterStrategies(Arrays.asList(ageFilterStrategy));
 
         CreditCardFilterStrategy creditCardFilterStrategy = new CreditCardFilterStrategy();
 
         CreditCard creditCard = new CreditCard();
-        creditCard.setCreditCardFilterStrategy(creditCardFilterStrategy);
+        creditCard.setCreditCardFilterStrategies(Arrays.asList(creditCardFilterStrategy));
 
         Identifiers identifiers = new Identifiers();
 

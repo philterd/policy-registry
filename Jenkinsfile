@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'maven-3.6.0'
-        jdk 'amazon-corretto-11'
+        jdk 'jdk8u192'
     }
     triggers {
         pollSCM 'H/10 * * * *'
@@ -25,6 +25,8 @@ pipeline {
     stages {
         stage ('Initialize') {
             steps {
+                deleteDir()
+                checkout scm
                 sh '''
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
@@ -34,7 +36,7 @@ pipeline {
         stage ('Build') {
             steps {
                 sh "mvn -version"
-                sh "mvn license:aggregate-add-third-party license:aggregate-download-licenses install deploy -Dmaven.javadoc.skip=true"
+                sh "mvn -U license:aggregate-add-third-party license:aggregate-download-licenses install deploy -Dmaven.repo.local=${WORKSPACE}/.repository"
                 sh "./set-version.sh ${env.BUILD_NUMBER} ${env.VERSION}"
             }
         }

@@ -117,7 +117,7 @@
         "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/{{user `project_name`}}/ -R",
         "sudo chmod +x /opt/{{user `project_name`}}/{{user `project_name`}}.jar",
         "sudo ln -s /opt/{{user `project_name`}}/{{user `project_name`}}.jar /etc/init.d/{{user `project_name`}}",
-        "sudo chkconfig {{user `project_name`}} on"
+        "sudo systemctl enable {{user `project_name`}}"
       ]
     },
     {

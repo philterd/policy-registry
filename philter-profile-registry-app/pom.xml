@@ -59,11 +59,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.mtnfog</groupId>
-			<artifactId>phileas-model</artifactId>
-			<version>${phileas.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.mtnfog</groupId>
 			<artifactId>philter-profile-registry-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>

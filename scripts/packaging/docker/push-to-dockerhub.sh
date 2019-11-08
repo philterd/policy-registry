@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# This script pushes a docker image to AWS ECS ECR.
+# This script pushes a docker image to DockerHub.
 
 BUILD_NUMBER=$1
 VERSION=$2
@@ -17,7 +17,7 @@ fi
 
 FULL_VERSION="$VERSION.$BUILD_NUMBER.$GIT_COMMIT"
 
-echo "Pushing docker image to AWS ECR: $PROJECT $FULL_VERSION"
+echo "Pushing docker image to DockerHub: $PROJECT $FULL_VERSION"
 
 DOCKERHUB_PASSWORD=`aws ssm get-parameter --region us-east-1 --name dockerhub_password | jq -r .Parameter.Value`
 echo $DOCKERHUB_PASSWORD | docker login --username jzemerick --password-stdin

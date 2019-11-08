@@ -50,7 +50,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<executable>true</executable>
-					<finalName>filter-profile-registry</finalName>
+					<finalName>philter-profile-registry</finalName>
 					<layout>ZIP</layout>
 				</configuration>
 			</plugin>

@@ -19,13 +19,10 @@ pipeline {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
         IMAGE = readMavenPom().getArtifactId()
         VERSION = readMavenPom().getVersion()
-        PHILTER_INDEX_DIR = "${WORKSPACE}"
     }
     stages {
         stage ('Initialize') {
             steps {
-                deleteDir()
-                checkout scm
                 sh '''
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
@@ -35,9 +32,9 @@ pipeline {
         stage ('Build') {
             steps {
                 sh "mvn -version"
-                sh "mvn -U license:aggregate-add-third-party license:aggregate-download-licenses install deploy -Dmaven.repo.local=${WORKSPACE}/.repository"
+                sh "mvn -U license:aggregate-add-third-party license:aggregate-download-licenses install deploy"
                 sh "./set-version.sh ${env.BUILD_NUMBER} ${env.VERSION}"
-		sh "./code-analysis.sh"
+            		sh "./code-analysis.sh"
             }
         }
         stage ('Docker') {

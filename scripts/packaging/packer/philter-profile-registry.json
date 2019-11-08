@@ -15,7 +15,7 @@
     "vpc_id": "vpc-3da1cb58",
     "built_by": "manual",
     "application": "",
-    "project_name": "filter-profile-registry",
+    "project_name": "",
     "local_user_name": "fpr"
   },
   "builders": [

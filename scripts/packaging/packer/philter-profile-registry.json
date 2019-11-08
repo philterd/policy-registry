@@ -147,7 +147,7 @@
         "sudo shred -n 50 -fuzv /var/log/btmp",
         "sudo shred -n 50 -fuzv /var/log/lastlog"
       ]
-    },
+    }
   ],
   "post-processors": [
     [

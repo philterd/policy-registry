@@ -1,6 +1,6 @@
 package com.mtnfog.philter.registry.services;
 
-import com.mtnfog.philter.model.profile.FilterProfile;
+import com.mtnfog.phileas.model.profile.FilterProfile;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,12 +1,12 @@
 package com.mtnfog.test.philter.registry.services;
 
 import com.google.gson.Gson;
-import com.mtnfog.philter.model.profile.FilterProfile;
-import com.mtnfog.philter.model.profile.Identifiers;
-import com.mtnfog.philter.model.profile.filters.Age;
-import com.mtnfog.philter.model.profile.filters.CreditCard;
-import com.mtnfog.philter.model.profile.filters.strategies.rules.AgeFilterStrategy;
-import com.mtnfog.philter.model.profile.filters.strategies.rules.CreditCardFilterStrategy;
+import com.mtnfog.phileas.model.profile.FilterProfile;
+import com.mtnfog.phileas.model.profile.Identifiers;
+import com.mtnfog.phileas.model.profile.filters.Age;
+import com.mtnfog.phileas.model.profile.filters.CreditCard;
+import com.mtnfog.phileas.model.profile.filters.strategies.rules.AgeFilterStrategy;
+import com.mtnfog.phileas.model.profile.filters.strategies.rules.CreditCardFilterStrategy;
 import com.mtnfog.philter.registry.services.FilterProfileService;
 import com.mtnfog.philter.registry.services.LocalFilterProfileService;
 import org.apache.logging.log4j.LogManager;

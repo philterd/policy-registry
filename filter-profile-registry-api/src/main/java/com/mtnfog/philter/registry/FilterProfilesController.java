@@ -1,7 +1,7 @@
 package com.mtnfog.philter.registry;
 
-import com.mtnfog.philter.model.api.Status;
-import com.mtnfog.philter.model.exceptions.api.BadRequestException;
+import com.mtnfog.phileas.model.api.Status;
+import com.mtnfog.phileas.model.exceptions.api.BadRequestException;
 import com.mtnfog.philter.registry.services.FilterProfileService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

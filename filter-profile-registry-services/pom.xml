@@ -28,13 +28,18 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.mtnfog</groupId>
-			<artifactId>philter-model</artifactId>
-			<version>${philter.version}</version>
+			<artifactId>phileas-model</artifactId>
+			<version>${phileas.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
 			<version>${commons.collections4.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons.io.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-validator</groupId>

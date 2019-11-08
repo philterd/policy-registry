@@ -1,7 +1,6 @@
 package com.mtnfog.philter.registry.exceptions;
 
-import com.mtnfog.philter.model.exceptions.InvalidFilterProfile;
-import com.mtnfog.philter.model.exceptions.api.BadRequestException;
+import com.mtnfog.phileas.model.exceptions.api.BadRequestException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -21,7 +20,7 @@ public class RestApiExceptions {
 	private static final Logger LOGGER = LogManager.getLogger(RestApiExceptions.class);
 
 	@ResponseBody
-	@ExceptionHandler({BadRequestException.class, InvalidFilterProfile.class, MissingServletRequestParameterException.class, HttpMessageNotReadableException.class})
+	@ExceptionHandler({BadRequestException.class, MissingServletRequestParameterException.class, HttpMessageNotReadableException.class})
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 	public String handleMissingParameterException(Exception ex) {
 		LOGGER.error("A parameter was missing or invalid.", ex);

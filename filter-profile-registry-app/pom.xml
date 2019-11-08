@@ -59,8 +59,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.mtnfog</groupId>
-			<artifactId>philter-model</artifactId>
-			<version>${philter.version}</version>
+			<artifactId>phileas-model</artifactId>
+			<version>${phileas.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mtnfog</groupId>

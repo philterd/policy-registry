@@ -95,7 +95,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- Philter version -->
-		<philter.version>1.0.0-SNAPSHOT</philter.version>
+		<phileas.version>1.0.1</phileas.version>
 		<!-- Project dependency versions -->
 		<aws.version>1.11.620</aws.version>
 		<commons.collections4.version>4.4</commons.collections4.version>

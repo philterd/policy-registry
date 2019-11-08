@@ -2,8 +2,8 @@ package com.mtnfog.philter.registry.services;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.mtnfog.philter.model.exceptions.api.BadRequestException;
-import com.mtnfog.philter.model.profile.FilterProfile;
+import com.mtnfog.phileas.model.exceptions.api.BadRequestException;
+import com.mtnfog.phileas.model.profile.FilterProfile;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

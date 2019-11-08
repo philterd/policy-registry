@@ -7,5 +7,5 @@ managing filter profiles for use by Philter. Filter profiles
 allow for configuring how sensitive information is removed or
 replaced in text.
 
-https://www.mtnfog.com/products/filter-profile-registry/
+https://www.mtnfog.com/products/philter-profile-registry/
 

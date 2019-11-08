@@ -1,9 +1,7 @@
 {
   "variables": {
     "ami_name": "",
-    "azure_client_secret": "",
     "build_number": "",
-    "capture_container_name": "",
     "commit": "",
     "version": "",
     "working_directory": "",
@@ -21,24 +19,6 @@
     "local_user_name": "fpr"
   },
   "builders": [
-    {
-      "name": "azure",
-      "type": "azure-arm",
-      "client_id": "af87533a-082c-43da-be0c-784e62b341b5",
-      "client_secret": "{{user `azure_client_secret`}}",
-      "subscription_id": "b905b94b-9da0-40ba-90b0-471edb85a3b3",
-      "tenant_id": "bb43555d-8f86-4363-8bc2-8a3c97e4a65d",
-      "managed_image_resource_group_name": "mtnfogpackerbuilds",
-      "managed_image_name": "{{user `capture_container_name`}}",
-      "os_type": "Linux",
-      "image_publisher": "OpenLogic",
-      "image_offer": "CentOS",
-      "image_sku": "7.4",
-      "temp_resource_group_name": "temp-build",
-      "location": "East US",
-      "vm_size": "Basic_A1",
-      "ssh_username": "{{user `ssh_username`}}"
-    },
     {
       "name": "aws",
       "type": "amazon-ebs",
@@ -72,7 +52,9 @@
     {
       "type": "shell",
       "inline": [
-        "sudo yum -y upgrade"
+        "sudo yum -y upgrade",
+        "sudo yum -y install https://d3pxv6yz143wms.cloudfront.net/8.222.10.1/java-1.8.0-amazon-corretto-devel-1.8.0_222.b10-1.x86_64.rpm",
+        "sudo yum clean all"
       ]
     },
     {
@@ -116,14 +98,6 @@
       "type": "file",
       "destination": "/opt/{{user `project_name`}}/{{user `project_name`}}.conf",
       "source": "{{user `working_directory`}}/{{user `project_name`}}.conf"
-    },
-    {
-      "type": "shell",
-      "inline": [
-        "wget https://d3pxv6yz143wms.cloudfront.net/11.0.2.9.3/java-11-amazon-corretto-devel-11.0.2.9-3.x86_64.rpm -O /tmp/java-11-amazon-corretto-devel-11.0.2.9-3.x86_64.rpm",
-        "sudo rpm -i /tmp/java-11-amazon-corretto-devel-11.0.2.9-3.x86_64.rpm",
-        "rm /tmp/java-11-amazon-corretto-devel-11.0.2.9-3.x86_64.rpm"
-      ]
     },
     {
       "type": "shell",
@@ -172,21 +146,8 @@
         "sudo shred -n 50 -fuzv /var/log/wtmp",
         "sudo shred -n 50 -fuzv /var/log/btmp",
         "sudo shred -n 50 -fuzv /var/log/lastlog"
-      ],
-      "only": [
-        "aws"
       ]
     },
-    {
-      "type": "shell",
-      "inline": [
-        "# Deprovision on Azure.",
-        "sudo /usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
-      ],
-      "only": [
-        "azure"
-      ]
-    }
   ],
   "post-processors": [
     [

@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.mtnfog</groupId>
-		<artifactId>filter-profile-registry</artifactId>
+		<artifactId>philter-profile-registry</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>filter-profile-registry-app</artifactId>
+	<artifactId>philter-profile-registry-app</artifactId>
 	<packaging>jar</packaging>
-	<name>filter-profile-registry-app</name>
+	<name>philter-profile-registry-app</name>
 	<build>
-		<finalName>filter-profile-registry</finalName>
+		<finalName>philter-profile-registry</finalName>
 		<testResources>
 			<testResource>
 				<directory>${project.basedir}/src/test/resources/</directory>
@@ -64,7 +64,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mtnfog</groupId>
-			<artifactId>filter-profile-registry-api</artifactId>
+			<artifactId>philter-profile-registry-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

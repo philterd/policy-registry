@@ -40,7 +40,6 @@ PACKER_LOG=1 PACKER_LOG_PATH=packer.log packer build \
   -var "built_by=$BUILT_BY" \
   -var "application=$PROJECT" \
   -var "build_number=$BUILD_NUMBER" \
-  -var "iam_instance_profile=build.mtnfog.com" \
   -var "project_name=$PROJECT" \
   ./$PROJECT.json
 

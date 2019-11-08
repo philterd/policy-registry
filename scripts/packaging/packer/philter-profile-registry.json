@@ -25,7 +25,6 @@
       "ami_name": "{{user `ami_name`}}",
       "ami_description": "{{user `ami_name`}}",
       "ena_support": true,
-      "iam_instance_profile": "{{user `iam_instance_profile`}}",
       "instance_type": "{{user `instance_type`}}",
       "region": "{{user `region`}}",
       "run_tags": {

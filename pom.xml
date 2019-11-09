@@ -75,6 +75,7 @@
 		</repository>
 	</repositories>
 	<modules>
+		<module>philter-profile-registry-model</module>
 		<module>philter-profile-registry-app</module>
 		<module>philter-profile-registry-api</module>
 		<module>philter-profile-registry-services</module>

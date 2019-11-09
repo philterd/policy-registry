@@ -1,12 +1,12 @@
-package com.mtnfog.philter.registry.services;
+package com.mtnfog.philter.registry.model.services;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.mtnfog.phileas.model.exceptions.api.BadRequestException;
-import com.mtnfog.phileas.model.profile.FilterProfile;
+import com.mtnfog.philter.registry.model.FilterProfileService;
+import com.mtnfog.philter.registry.model.exceptions.BadRequestException;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,12 +20,10 @@ public class LocalFilterProfileService implements FilterProfileService {
 
     private Properties applicationProperties;
     private String filterProfilesDirectory;
-    private Gson gson;
 
     public LocalFilterProfileService(Properties applicationProperties) {
 
         this.applicationProperties = applicationProperties;
-        this.gson = new Gson();
 
         // Path to the filter profiles.
         filterProfilesDirectory = applicationProperties.getProperty("filter.profiles.directory", System.getProperty("user.dir") + "/profiles/");
@@ -44,8 +42,11 @@ public class LocalFilterProfileService implements FilterProfileService {
         for(final File file : files) {
 
             final String json = FileUtils.readFileToString(file, Charset.defaultCharset());
-            final FilterProfile filterProfile = gson.fromJson(json, FilterProfile.class);
-            names.add(filterProfile.getName());
+
+            final JSONObject object = new JSONObject(json);
+            final String name = object.getString("name");
+
+            names.add(name);
 
         }
 
@@ -67,9 +68,9 @@ public class LocalFilterProfileService implements FilterProfileService {
     }
 
     @Override
-    public Map<String, FilterProfile> getAll() throws IOException {
+    public Map<String, String> getAll() throws IOException {
 
-        final Map<String, FilterProfile> filterProfiles = new HashMap<>();
+        final Map<String, String> filterProfiles = new HashMap<>();
 
         // Read the filter profiles from the file system.
         final Collection<File> files = FileUtils.listFiles(new File(filterProfilesDirectory), new String[]{"json"}, false);
@@ -79,9 +80,12 @@ public class LocalFilterProfileService implements FilterProfileService {
 
             LOGGER.info("Loading filter profile {}", file.getAbsolutePath());
             final String json = FileUtils.readFileToString(file, Charset.defaultCharset());
-            final FilterProfile filterProfile = gson.fromJson(json, FilterProfile.class);
-            filterProfiles.put(filterProfile.getName(), filterProfile);
-            LOGGER.info("Added filter profile named {}", filterProfile.getName());
+
+            final JSONObject object = new JSONObject(json);
+            final String name = object.getString("name");
+
+            filterProfiles.put(name, json);
+            LOGGER.info("Added filter profile named {}", name);
 
         }
 
@@ -94,13 +98,14 @@ public class LocalFilterProfileService implements FilterProfileService {
 
         try {
 
-            final FilterProfile filterProfile = gson.fromJson(filterProfileJson, FilterProfile.class);
+            final JSONObject object = new JSONObject(filterProfileJson);
+            final String name = object.getString("name");
 
-            final File file = new File(filterProfilesDirectory, filterProfile.getName() + ".json");
+            final File file = new File(filterProfilesDirectory, name + ".json");
 
             FileUtils.writeStringToFile(file, filterProfileJson, Charset.defaultCharset());
 
-        } catch (JsonSyntaxException ex) {
+        } catch (JSONException ex) {
 
             LOGGER.error("The provided filter profile is not valid.", ex);
             throw new BadRequestException("The provided filter profile is not valid.");

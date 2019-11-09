@@ -1,6 +1,6 @@
-package com.mtnfog.philter.registry.exceptions;
+package com.mtnfog.philter.registry.model.exceptions;
 
-import com.mtnfog.phileas.model.exceptions.api.BadRequestException;
+import com.mtnfog.philter.registry.model.exceptions.BadRequestException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;

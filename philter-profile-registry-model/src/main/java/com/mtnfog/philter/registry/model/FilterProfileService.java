@@ -1,6 +1,4 @@
-package com.mtnfog.philter.registry.services;
-
-import com.mtnfog.phileas.model.profile.FilterProfile;
+package com.mtnfog.philter.registry.model;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,7 +8,7 @@ public interface FilterProfileService {
 
     List<String> get() throws IOException;
     String get(String filterProfileName) throws IOException;
-    Map<String, FilterProfile> getAll() throws IOException;
+    Map<String, String> getAll() throws IOException;
     void save(String filterProfileJson) throws IOException;
     void delete(String name) throws IOException;
 

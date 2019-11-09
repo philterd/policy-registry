@@ -7,8 +7,8 @@ import com.mtnfog.phileas.model.profile.filters.Age;
 import com.mtnfog.phileas.model.profile.filters.CreditCard;
 import com.mtnfog.phileas.model.profile.filters.strategies.rules.AgeFilterStrategy;
 import com.mtnfog.phileas.model.profile.filters.strategies.rules.CreditCardFilterStrategy;
-import com.mtnfog.philter.registry.services.FilterProfileService;
-import com.mtnfog.philter.registry.services.LocalFilterProfileService;
+import com.mtnfog.philter.registry.model.FilterProfileService;
+import com.mtnfog.philter.registry.model.services.LocalFilterProfileService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
@@ -62,7 +62,7 @@ public class LocalFilterProfileServiceTest {
         filterProfileService.save(gson.toJson(getFilterProfile("name1")));
         filterProfileService.save(gson.toJson(getFilterProfile("name2")));
 
-        final Map<String, FilterProfile> all = filterProfileService.getAll();
+        final Map<String, String> all = filterProfileService.getAll();
 
         Assert.assertTrue(all.size() == 2);
         Assert.assertTrue(all.keySet().contains("name1"));

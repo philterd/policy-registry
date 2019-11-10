@@ -2,6 +2,8 @@ package com.mtnfog.philter.registry.model;
 
 import com.mtnfog.philter.registry.model.exceptions.BadRequestException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +17,10 @@ import java.util.List;
 @Controller
 public class FilterProfilesController {
 
+    private static final Logger LOGGER = LogManager.getLogger(FilterProfilesController.class);
+
     private static final String HEALTHY = "Healthy";
+    private static final String UNHEALTHY = "Unhealthy";
 
     @Autowired
     private FilterProfileService filterProfileService;
@@ -65,10 +70,23 @@ public class FilterProfilesController {
     }
 
     @RequestMapping(value="/api/status", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Status> status() {
+    public ResponseEntity<Status> status() throws IOException {
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(new Status(HEALTHY));
+        final int filterProfileCount = filterProfileService.getAll().size();
+
+        try {
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new Status(HEALTHY, filterProfileCount));
+
+        } catch (Exception ex) {
+
+            LOGGER.error("Unable to determine count of filter profiles.", ex);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new Status(UNHEALTHY, filterProfileCount));
+
+        }
 
     }
 

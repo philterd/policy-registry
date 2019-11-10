@@ -6,9 +6,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public final class Status {
 
     private final String status;
+    private final int filterProfileCount;
 
-    public Status(String status) {
+    public Status(String status, int filterProfileCount) {
         this.status = status;
+        this.filterProfileCount = filterProfileCount;
     }
 
     @Override
@@ -29,6 +31,10 @@ public final class Status {
 
     public String getStatus() {
         return status;
+    }
+
+    public int getFilterProfileCount() {
+        return filterProfileCount;
     }
 
 }

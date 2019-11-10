@@ -56,6 +56,10 @@ public class FilterProfilesController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable String filterProfileName) throws IOException {
 
+        if(StringUtils.isEmpty(filterProfileName)) {
+            throw new BadRequestException("The filter profile name is missing.");
+        }
+
         filterProfileService.delete(filterProfileName);
 
     }

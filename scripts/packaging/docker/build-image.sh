@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -e
 
 BUILD_NUMBER=$1

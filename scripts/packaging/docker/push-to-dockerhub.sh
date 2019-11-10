@@ -24,4 +24,8 @@ echo $DOCKERHUB_PASSWORD | docker login --username jzemerick --password-stdin
 
 docker tag mtnfog/$PROJECT:$FULL_VERSION mtnfog/$PROJECT:$FULL_VERSION
 docker push mtnfog/$PROJECT:$FULL_VERSION
+
+docker tag mtnfog/$PROJECT:$FULL_VERSION mtnfog/$PROJECT:latest
+docker push mtnfog/$PROJECT:latest
+
 docker logout

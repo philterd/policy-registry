@@ -18,3 +18,4 @@ fi
 FULL_VERSION="$VERSION.$BUILD_NUMBER.$GIT_COMMIT"
 
 docker rmi -f mtnfog/$PROJECT:$FULL_VERSION
+docker rmi -f mtnfog/$PROJECT:latest

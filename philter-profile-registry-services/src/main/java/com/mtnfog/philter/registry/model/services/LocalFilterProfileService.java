@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
 
+/**
+ * Implementation of {@link FilterProfileService} that is backed by the local file system.
+ */
 public class LocalFilterProfileService implements FilterProfileService {
 
     private static final Logger LOGGER = LogManager.getLogger(LocalFilterProfileService.class);
@@ -23,10 +26,8 @@ public class LocalFilterProfileService implements FilterProfileService {
 
     public LocalFilterProfileService(Properties applicationProperties) {
 
-        this.applicationProperties = applicationProperties;
-
         // Path to the filter profiles.
-        filterProfilesDirectory = applicationProperties.getProperty("filter.profiles.directory", System.getProperty("user.dir") + "/profiles/");
+        filterProfilesDirectory = applicationProperties.getProperty("filter.profiles.store.local.directory", System.getProperty("user.dir") + "/profiles/");
         LOGGER.info("Looking for filter profiles in {}", filterProfilesDirectory);
 
     }

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.8.RELEASE</version>
+		<version>2.2.1.RELEASE</version>
 	</parent>
 	<artifactId>philter-profile-registry</artifactId>
 	<groupId>com.mtnfog</groupId>
@@ -95,22 +95,14 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<!-- Philter version -->
+		<!-- Phileas version - only used for tests -->
 		<phileas.version>1.0.1</phileas.version>
 		<!-- Project dependency versions -->
-		<aws.version>1.11.620</aws.version>
-		<commons.collections4.version>4.4</commons.collections4.version>
+		<aws.version>1.11.671</aws.version>
 		<commons.io.version>2.6</commons.io.version>
-		<commons.math.version>3.6.1</commons.math.version>
-		<commons.text.version>1.7</commons.text.version>
-		<commons.validator.version>1.6</commons.validator.version>
-		<dropwizard-metrics-cloudwatch.version>1.0.13</dropwizard-metrics-cloudwatch.version>
 		<equals.verifier.version>3.1.9</equals.verifier.version>
 		<mockito.version>1.10.19</mockito.version>
-		<retrofit.version>2.6.1</retrofit.version>
-		<scala.major.version>2.12</scala.major.version>
-		<spring.boot.version>2.1.8.RELEASE</spring.boot.version>
-		<thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+		<spring.boot.version>2.2.1.RELEASE</spring.boot.version>
 		<!-- Sonarqube -->
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>

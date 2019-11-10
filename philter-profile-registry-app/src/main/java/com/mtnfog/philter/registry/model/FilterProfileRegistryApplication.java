@@ -1,6 +1,8 @@
 package com.mtnfog.philter.registry.model;
 
 import com.mtnfog.philter.registry.model.services.LocalFilterProfileService;
+import com.mtnfog.philter.registry.model.services.S3FilterProfileService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
@@ -34,7 +36,20 @@ public class FilterProfileRegistryApplication {
             properties.load(is);
         }
 
-        return new LocalFilterProfileService(properties);
+        if(StringUtils.equalsIgnoreCase(properties.getProperty("filter.profiles.store", "local"), "local")) {
+
+            return new LocalFilterProfileService(properties);
+
+        } else if(StringUtils.equalsIgnoreCase(properties.getProperty("filter.profiles.store", "local"), "s3")) {
+
+            return new S3FilterProfileService(properties, false);
+
+        } else {
+
+            LOGGER.warn("Invalid value for filter.profiles.store. Defaulting to local.");
+            return new LocalFilterProfileService(properties);
+
+        }
 
     }
 

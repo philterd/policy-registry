@@ -15,7 +15,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.mtnfog</groupId>
-			<artifactId>philter-profile-registry-services</artifactId>
+			<artifactId>filter-profile-registry-services</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

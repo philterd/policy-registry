@@ -72,19 +72,17 @@ public class FilterProfilesController {
     @RequestMapping(value="/api/status", method=RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Status> status() throws IOException {
 
-        final int filterProfileCount = filterProfileService.getAll().size();
-
         try {
 
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new Status(HEALTHY, filterProfileCount));
+                    .body(new Status(HEALTHY));
 
         } catch (Exception ex) {
 
             LOGGER.error("Unable to determine count of filter profiles.", ex);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new Status(UNHEALTHY, filterProfileCount));
+                    .body(new Status(UNHEALTHY));
 
         }
 

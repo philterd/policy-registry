@@ -13,6 +13,15 @@
 	<name>filter-profile-registry-app</name>
 	<build>
 		<finalName>filter-profile-registry</finalName>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>internal.properties</include>
+				</includes>
+			</resource>
+		</resources>
 		<testResources>
 			<testResource>
 				<directory>${project.basedir}/src/test/resources/</directory>
@@ -52,7 +61,7 @@
 					<executable>true</executable>
 					<finalName>filter-profile-registry</finalName>
 					<layout>JAR</layout>
-					<mainClass>com.mtnfog.philter.registry.FilterProfileRegistryApplication</mainClass>
+					<mainClass>com.mtnfog.filter.registry.FilterProfileRegistryApplication</mainClass>
 				</configuration>
 				<executions>
 					<execution>
@@ -67,7 +76,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.mtnfog</groupId>
-			<artifactId>philter-profile-registry-api</artifactId>
+			<artifactId>filter-profile-registry-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

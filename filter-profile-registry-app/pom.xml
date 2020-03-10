@@ -50,9 +50,17 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<executable>true</executable>
-					<finalName>philter-profile-registry</finalName>
-					<layout>ZIP</layout>
+					<finalName>filter-profile-registry</finalName>
+					<layout>JAR</layout>
+					<mainClass>com.mtnfog.philter.registry.FilterProfileRegistryApplication</mainClass>
 				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,5 +1,6 @@
-package com.mtnfog.philter.registry.model;
+package com.mtnfog.philter.registry;
 
+import com.mtnfog.philter.registry.model.FilterProfileService;
 import com.mtnfog.philter.registry.model.services.LocalFilterProfileService;
 import com.mtnfog.philter.registry.model.services.S3FilterProfileService;
 import org.apache.commons.lang3.StringUtils;

@@ -1,0 +1,11 @@
+[Unit]
+Description=Filter Profile Registry
+After=syslog.target
+
+[Service]
+User=philter
+ExecStart=/bin/bash /opt/filter-profile-registry/filter-profile-registry.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

@@ -60,78 +60,84 @@
     {
       "type": "shell",
       "inline": [
-        "sudo mkdir -p /opt/{{user `project_name`}}/ssl",
-        "sudo mkdir -p /opt/{{user `project_name`}}/profiles",
+        "sudo mkdir -p /opt/filter-profile-registry/ssl",
+        "sudo mkdir -p /opt/filter-profile-registry/profiles",
         "sudo groupadd {{user `local_user_name`}}",
         "sudo useradd --system --create-home --gid {{user `local_user_name`}} {{user `local_user_name`}}",
         "sudo usermod --lock --shell /sbin/nologin {{user `local_user_name`}}",
         "sudo chage -E0 {{user `local_user_name`}}",
-        "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/{{user `project_name`}} -R"
+        "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/filter-profile-registry -R"
       ]
     },
     {
       "type": "file",
-      "destination": "/opt/{{user `project_name`}}/{{user `project_name`}}.jar",
-      "source": "{{user `working_directory`}}/{{user `project_name`}}.jar"
+      "destination": "/opt/filter-profile-registry/filter-profile-registry.jar",
+      "source": "{{user `working_directory`}}/filter-profile-registry.jar"
     },
     {
       "type": "file",
-      "destination": "/opt/{{user `project_name`}}/application.properties",
+      "destination": "/opt/filter-profile-registry/application.properties",
       "source": "{{user `working_directory`}}/application.properties"
     },
     {
       "type": "file",
-      "destination": "/opt/{{user `project_name`}}/README.txt",
+      "destination": "/opt/filter-profile-registry/README.txt",
       "source": "{{user `working_directory`}}/README.txt"
     },
     {
       "type": "file",
-      "destination": "/opt/{{user `project_name`}}/NOTICE.txt",
+      "destination": "/opt/filter-profile-registry/NOTICE.txt",
       "source": "{{user `working_directory`}}/NOTICE.txt"
     },
     {
       "type": "file",
-      "destination": "/opt/{{user `project_name`}}/LICENSE.txt",
+      "destination": "/opt/filter-profile-registry/LICENSE.txt",
       "source": "{{user `working_directory`}}/LICENSE.txt"
     },
     {
       "type": "file",
-      "destination": "/opt/{{user `project_name`}}/{{user `project_name`}}.conf",
-      "source": "{{user `working_directory`}}/{{user `project_name`}}.conf"
+      "destination": "/opt/filter-profile-registry/filter-profile-registry.conf",
+      "source": "{{user `working_directory`}}/filter-profile-registry.conf"
+    },
+    {
+      "type": "file",
+      "destination": "/tmp/filter-profile-registry.service",
+      "source": "{{user `working_directory`}}/filter-profile-registry.service"
     },
     {
       "type": "shell",
       "inline": [
-        "sudo keytool -genkeypair -keypass Password123! -dname \"CN=fpr, O=fpr, C=US\" -alias fpr -keyalg RSA -keysize 4096 -storepass Password123! -storetype PKCS12 -keystore /opt/{{user `project_name`}}/ssl/{{user `project_name`}}.p12 -validity 3650",
-        "echo \"\n\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
-        "echo \"# SSL certificate settings\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
-        "echo \"server.ssl.key-store-type=PKCS12\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
-        "echo \"server.ssl.key-store=/opt/{{user `project_name`}}/ssl/{{user `project_name`}}.p12\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
-        "echo \"server.ssl.key-store-password=Password123!\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
-        "echo \"server.ssl.key-alias={{user `local_user_name`}}\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
-        "echo \"security.require-ssl=true\" | sudo tee -a /opt/{{user `project_name`}}/application.properties"
+        "sudo keytool -genkeypair -keypass Password123! -dname \"CN=fpr, O=fpr, C=US\" -alias fpr -keyalg RSA -keysize 4096 -storepass Password123! -storetype PKCS12 -keystore /opt/filter-profile-registry/ssl/filter-profile-registry.p12 -validity 3650",
+        "echo \"\n\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"# SSL certificate settings\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"server.ssl.key-store-type=PKCS12\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"server.ssl.key-store=/opt/filter-profile-registry/ssl/filter-profile-registry.p12\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"server.ssl.key-store-password=Password123!\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"server.ssl.key-alias={{user `local_user_name`}}\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"security.require-ssl=true\" | sudo tee -a /opt/filter-profile-registry/application.properties"
       ]
     },
     {
       "type": "shell",
       "inline": [
-        "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/{{user `project_name`}}/ -R",
-        "sudo chmod +x /opt/{{user `project_name`}}/{{user `project_name`}}.jar",
-        "sudo ln -s /opt/{{user `project_name`}}/{{user `project_name`}}.jar /etc/init.d/{{user `project_name`}}",
-        "sudo systemctl enable {{user `project_name`}}"
+        "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/filter-profile-registry/ -R",
+        "sudo chmod +x /opt/filter-profile-registry/filter-profile-registry.jar",
+        "sudo mv /tmp/filter-profile-registry.service /etc/systemd/system/filter-profile-registry.service",
+        "sudo systemctl daemon-reload",
+        "sudo chkconfig filter-profile-registry on"
       ]
     },
     {
       "type": "shell",
       "inline": [
         "# Set permissions and ownership.",
-        "sudo chmod 500 /opt/{{user `project_name`}}/{{user `project_name`}}.jar",
-        "sudo chmod 644 /opt/{{user `project_name`}}/{{user `project_name`}}.conf",
-        "sudo chmod 644 /opt/{{user `project_name`}}/application.properties",
-        "sudo chmod 644 /opt/{{user `project_name`}}/LICENSE.txt",
-        "sudo chmod 644 /opt/{{user `project_name`}}/NOTICE.txt",
-        "sudo chmod 644 /opt/{{user `project_name`}}/README.txt",
-        "sudo chown {{user `local_user_name`}}:{{user `local_user_name`}} /opt/{{user `project_name`}} -R"
+        "sudo chmod 500 /opt/filter-profile-registry/filter-profile-registry.jar",
+        "sudo chmod 644 /opt/filter-profile-registry/filter-profile-registry.conf",
+        "sudo chmod 644 /opt/filter-profile-registry/application.properties",
+        "sudo chmod 644 /opt/filter-profile-registry/LICENSE.txt",
+        "sudo chmod 644 /opt/filter-profile-registry/NOTICE.txt",
+        "sudo chmod 644 /opt/filter-profile-registry/README.txt",
+        "sudo chown {{user `local_user_name`}}:{{user `local_user_name`}} /opt/filter-profile-registry -R"
       ]
     },
     {

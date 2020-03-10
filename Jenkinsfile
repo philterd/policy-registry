@@ -11,7 +11,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '30'))
     }
     parameters {
-        booleanParam(defaultValue: true, description: 'Build Docker and push to ECR', name: 'isDocker')
+        booleanParam(defaultValue: true, description: 'Build Docker image', name: 'isDocker')
         booleanParam(defaultValue: false, description: 'Build AMI', name: 'isAMI')
         booleanParam(defaultValue: false, description: 'Build Azure VHD', name: 'isAzure')
         booleanParam(defaultValue: true, description: 'Source Analysis', name: 'isAnalysis')
@@ -43,7 +43,7 @@ pipeline {
         stage ('Analysis') {
             when {
                 expression {
-                    if (env.ISANALYSIS == "true") {
+                    if (env.isAnalysis == "true") {
                         return true
                     }
                     return false
@@ -66,7 +66,7 @@ pipeline {
                 sh './copy-to-distribution.sh'
                 dir ('scripts/packaging/docker/') {
                     sh "./build-image.sh ${env.BUILD_NUMBER} ${env.VERSION}"
-                    sh "./push-to-aws.sh ${env.BUILD_NUMBER} ${env.VERSION}"
+                    sh "./push-to-dockerhub.sh ${env.BUILD_NUMBER} ${env.VERSION}"
                     sh "./delete-image.sh ${env.BUILD_NUMBER} ${env.VERSION}"
                 }
             }
@@ -74,7 +74,7 @@ pipeline {
         stage ('AMI') {
             when {
                 expression {
-                    if (env.ISAMI == "true") {
+                    if (env.isAMI == "true") {
                         return true
                     }
                     return false
@@ -90,7 +90,7 @@ pipeline {
         stage ('Azure') {
             when {
                 expression {
-                    if (env.ISAZURE == "true") {
+                    if (env.isAzure == "true") {
                         return true
                     }
                     return false

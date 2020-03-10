@@ -111,7 +111,7 @@
         "echo \"server.ssl.key-store-type=PKCS12\" | sudo tee -a /opt/filter-profile-registry/application.properties",
         "echo \"server.ssl.key-store=/opt/filter-profile-registry/ssl/filter-profile-registry.p12\" | sudo tee -a /opt/filter-profile-registry/application.properties",
         "echo \"server.ssl.key-store-password=Password123!\" | sudo tee -a /opt/filter-profile-registry/application.properties",
-        "echo \"server.ssl.key-alias=philter\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"server.ssl.key-alias=fpr\" | sudo tee -a /opt/filter-profile-registry/application.properties",
         "echo \"security.require-ssl=true\" | sudo tee -a /opt/filter-profile-registry/application.properties"
       ]
     },

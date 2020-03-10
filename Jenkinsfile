@@ -6,7 +6,12 @@ pipeline {
     }
     triggers {
         pollSCM 'H/10 * * * *'
+        parameterizedCron('''
+            # Build AMI from master each morning at 1 AM.
+            H 2 * * * %isAMI=true;BRANCH_TAG=master
+        ''')
     }
+
     options {
         buildDiscarder(logRotator(numToKeepStr: '30'))
     }

@@ -10,13 +10,11 @@ RUN groupadd -g $GID $USER || groupmod -n $USER `getent group $GID | cut -d: -f1
     && usermod --lock --shell /sbin/nologin $USER \
     && chage -E0 $USER
 
+RUN dnf install -y java-11-openjdk
+
 RUN mkdir -p /opt/filter-profile-registry \
     && mkdir -p /opt/filter-profile-registry/ssl \
     && mkdir -p /opt/filter-profile-registry/profiles
-
-RUN dnf install -y java-11-openjdk
-
-USER $USER:$USER
 
 COPY files/philter-profile-registry.jar /opt/philter-profile-registry/
 COPY files/application.properties /opt/philter-profile-registry/
@@ -33,8 +31,6 @@ RUN keytool -genkeypair -keypass Password123! -dname "CN=$USER, O=$USER, C=US" -
     && echo "server.ssl.key-store-password=Password123!" | tee -a /opt/filter-profile-registry/application.properties \
     && echo "server.ssl.key-alias=filter-profile-registry" | tee -a /opt/filter-profile-registry/application.properties \
     && echo "security.require-ssl=true" | tee -a /opt/filter-profile-registry/application.properties
-
-USER root:root
 
 RUN chown -R $USER:$USER /opt/philter-profile-registry \
     && chmod +x /opt/philter-profile-registry/philter-profile-registry.jar

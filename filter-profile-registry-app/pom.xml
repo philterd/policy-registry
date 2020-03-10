@@ -61,7 +61,7 @@
 					<executable>true</executable>
 					<finalName>filter-profile-registry</finalName>
 					<layout>JAR</layout>
-					<mainClass>com.mtnfog.filter.registry.FilterProfileRegistryApplication</mainClass>
+					<mainClass>com.mtnfog.philter.registry.FilterProfileRegistryApplication</mainClass>
 				</configuration>
 				<executions>
 					<execution>

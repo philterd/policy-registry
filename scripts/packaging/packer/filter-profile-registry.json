@@ -14,9 +14,7 @@
     "subnet_id": "subnet-a8c4e883",
     "vpc_id": "vpc-3da1cb58",
     "built_by": "manual",
-    "application": "",
-    "project_name": "",
-    "local_user_name": "philter"
+    "application": ""
   },
   "builders": [
     {
@@ -62,10 +60,10 @@
       "inline": [
         "sudo mkdir -p /opt/filter-profile-registry/ssl",
         "sudo mkdir -p /opt/filter-profile-registry/profiles",
-        "sudo groupadd {{user `local_user_name`}}",
-        "sudo useradd --system --create-home --gid {{user `local_user_name`}} {{user `local_user_name`}}",
-        "sudo usermod --lock --shell /sbin/nologin {{user `local_user_name`}}",
-        "sudo chage -E0 {{user `local_user_name`}}",
+        "sudo groupadd philter",
+        "sudo useradd --system --create-home --gid philter philter",
+        "sudo usermod --lock --shell /sbin/nologin philter",
+        "sudo chage -E0 philter",
         "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/filter-profile-registry -R"
       ]
     },
@@ -113,7 +111,7 @@
         "echo \"server.ssl.key-store-type=PKCS12\" | sudo tee -a /opt/filter-profile-registry/application.properties",
         "echo \"server.ssl.key-store=/opt/filter-profile-registry/ssl/filter-profile-registry.p12\" | sudo tee -a /opt/filter-profile-registry/application.properties",
         "echo \"server.ssl.key-store-password=Password123!\" | sudo tee -a /opt/filter-profile-registry/application.properties",
-        "echo \"server.ssl.key-alias={{user `local_user_name`}}\" | sudo tee -a /opt/filter-profile-registry/application.properties",
+        "echo \"server.ssl.key-alias=philter\" | sudo tee -a /opt/filter-profile-registry/application.properties",
         "echo \"security.require-ssl=true\" | sudo tee -a /opt/filter-profile-registry/application.properties"
       ]
     },
@@ -132,12 +130,13 @@
       "inline": [
         "# Set permissions and ownership.",
         "sudo chmod 500 /opt/filter-profile-registry/filter-profile-registry.jar",
+        "sudo chmod 600 /opt/filter-profile-registry/ssl/filter-profile-registry.p12",
         "sudo chmod 644 /opt/filter-profile-registry/filter-profile-registry.conf",
         "sudo chmod 644 /opt/filter-profile-registry/application.properties",
         "sudo chmod 644 /opt/filter-profile-registry/LICENSE.txt",
         "sudo chmod 644 /opt/filter-profile-registry/NOTICE.txt",
         "sudo chmod 644 /opt/filter-profile-registry/README.txt",
-        "sudo chown {{user `local_user_name`}}:{{user `local_user_name`}} /opt/filter-profile-registry -R"
+        "sudo chown philter:philter /opt/filter-profile-registry -R"
       ]
     },
     {

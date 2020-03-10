@@ -1,8 +1,8 @@
 pipeline {
     agent any
     tools {
-        maven 'maven-3.6.0'
-        jdk 'jdk8u192'
+        maven 'maven-3.6.3'
+        jdk 'java-1.11.0-openjdk-amd64'
     }
     triggers {
         pollSCM 'H/10 * * * *'
@@ -20,7 +20,6 @@ pipeline {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
         IMAGE = readMavenPom().getArtifactId()
         VERSION = readMavenPom().getVersion()
-        PHILTER_INDEX_DIR = "${WORKSPACE}"
     }
     stages {
         stage ('Initialize') {

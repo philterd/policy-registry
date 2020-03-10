@@ -1,12 +1,14 @@
 #!/bin/bash
 
-# This script pushes a docker image to AWS ECS ECR.
+# Deletes the locally built image.
+
+set -e
 
 BUILD_NUMBER=$1
 VERSION=$2
 
 GIT_COMMIT=`git rev-parse --short HEAD`
-PROJECT="filter-profile-registry"
+PROJECT="philter-profile-registry"
 
 if [ -z "$VERSION" ]
 then
@@ -16,4 +18,4 @@ fi
 FULL_VERSION="$VERSION.$BUILD_NUMBER.$GIT_COMMIT"
 
 docker rmi -f mtnfog/$PROJECT:$FULL_VERSION
-docker rmi -f 341239660749.dkr.ecr.us-east-1.amazonaws.com/mtnfog/$PROJECT:$FULL_VERSION
+docker rmi -f mtnfog/$PROJECT:latest

@@ -1,3 +1,3 @@
 #!/bin/bash
-curl -vvvv http://localhost:8080/api/status
+curl -s http://localhost:8080/api/status | jq
 

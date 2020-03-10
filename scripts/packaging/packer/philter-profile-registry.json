@@ -1,0 +1,160 @@
+{
+  "variables": {
+    "ami_name": "",
+    "build_number": "",
+    "commit": "",
+    "version": "",
+    "working_directory": "",
+    "iam_instance_profile": "",
+    "instance_type": "t3.micro",
+    "region": "us-east-1",
+    "source_ami": "",
+    "source_ami_description": "",
+    "ssh_username": "ec2-user",
+    "subnet_id": "subnet-a8c4e883",
+    "vpc_id": "vpc-3da1cb58",
+    "built_by": "manual",
+    "application": "",
+    "project_name": "",
+    "local_user_name": "fpr"
+  },
+  "builders": [
+    {
+      "name": "aws",
+      "type": "amazon-ebs",
+      "ami_name": "{{user `ami_name`}}",
+      "ami_description": "{{user `ami_name`}}",
+      "ena_support": true,
+      "instance_type": "{{user `instance_type`}}",
+      "region": "{{user `region`}}",
+      "run_tags": {
+        "Name": "Creating {{user `ami_name`}} AMI"
+      },
+      "security_group_id": "{{user `security_group_id`}}",
+      "source_ami": "{{user `source_ami`}}",
+      "ssh_username": "{{user `ssh_username`}}",
+      "subnet_id": "{{user `subnet_id`}}",
+      "tags": {
+        "Name": "{{user `ami_name`}}",
+        "GitCommit": "{{user `commit`}}",
+        "Version": "{{user `version`}}",
+        "Base AMI": "{{user `source_ami`}}",
+        "Base AMI Description": "{{user `source_ami_description`}}",
+        "Built By": "{{user `built_by`}}",
+        "Application": "{{user `application`}}",
+        "Build Number": "{{user `build_number`}}"
+      },
+      "vpc_id": "{{user `vpc_id`}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo yum -y upgrade",
+        "sudo yum -y install https://d3pxv6yz143wms.cloudfront.net/8.222.10.1/java-1.8.0-amazon-corretto-devel-1.8.0_222.b10-1.x86_64.rpm",
+        "sudo yum clean all"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo mkdir -p /opt/{{user `project_name`}}/ssl",
+        "sudo mkdir -p /opt/{{user `project_name`}}/profiles",
+        "sudo groupadd {{user `local_user_name`}}",
+        "sudo useradd --system --create-home --gid {{user `local_user_name`}} {{user `local_user_name`}}",
+        "sudo usermod --lock --shell /sbin/nologin {{user `local_user_name`}}",
+        "sudo chage -E0 {{user `local_user_name`}}",
+        "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/{{user `project_name`}} -R"
+      ]
+    },
+    {
+      "type": "file",
+      "destination": "/opt/{{user `project_name`}}/{{user `project_name`}}.jar",
+      "source": "{{user `working_directory`}}/{{user `project_name`}}.jar"
+    },
+    {
+      "type": "file",
+      "destination": "/opt/{{user `project_name`}}/application.properties",
+      "source": "{{user `working_directory`}}/application.properties"
+    },
+    {
+      "type": "file",
+      "destination": "/opt/{{user `project_name`}}/README.txt",
+      "source": "{{user `working_directory`}}/README.txt"
+    },
+    {
+      "type": "file",
+      "destination": "/opt/{{user `project_name`}}/NOTICE.txt",
+      "source": "{{user `working_directory`}}/NOTICE.txt"
+    },
+    {
+      "type": "file",
+      "destination": "/opt/{{user `project_name`}}/LICENSE.txt",
+      "source": "{{user `working_directory`}}/LICENSE.txt"
+    },
+    {
+      "type": "file",
+      "destination": "/opt/{{user `project_name`}}/{{user `project_name`}}.conf",
+      "source": "{{user `working_directory`}}/{{user `project_name`}}.conf"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo keytool -genkeypair -keypass Password123! -dname \"CN=fpr, O=fpr, C=US\" -alias fpr -keyalg RSA -keysize 4096 -storepass Password123! -storetype PKCS12 -keystore /opt/{{user `project_name`}}/ssl/{{user `project_name`}}.p12 -validity 3650",
+        "echo \"\n\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
+        "echo \"# SSL certificate settings\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
+        "echo \"server.ssl.key-store-type=PKCS12\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
+        "echo \"server.ssl.key-store=/opt/{{user `project_name`}}/ssl/{{user `project_name`}}.p12\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
+        "echo \"server.ssl.key-store-password=Password123!\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
+        "echo \"server.ssl.key-alias={{user `local_user_name`}}\" | sudo tee -a /opt/{{user `project_name`}}/application.properties",
+        "echo \"security.require-ssl=true\" | sudo tee -a /opt/{{user `project_name`}}/application.properties"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo chown {{user `ssh_username`}}:{{user `ssh_username`}} /opt/{{user `project_name`}}/ -R",
+        "sudo chmod +x /opt/{{user `project_name`}}/{{user `project_name`}}.jar",
+        "sudo ln -s /opt/{{user `project_name`}}/{{user `project_name`}}.jar /etc/init.d/{{user `project_name`}}",
+        "sudo systemctl enable {{user `project_name`}}"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "# Set permissions and ownership.",
+        "sudo chmod 500 /opt/{{user `project_name`}}/{{user `project_name`}}.jar",
+        "sudo chmod 644 /opt/{{user `project_name`}}/{{user `project_name`}}.conf",
+        "sudo chmod 644 /opt/{{user `project_name`}}/application.properties",
+        "sudo chmod 644 /opt/{{user `project_name`}}/LICENSE.txt",
+        "sudo chmod 644 /opt/{{user `project_name`}}/NOTICE.txt",
+        "sudo chmod 644 /opt/{{user `project_name`}}/README.txt",
+        "sudo chown {{user `local_user_name`}}:{{user `local_user_name`}} /opt/{{user `project_name`}} -R"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "# Clean up.",
+        "sudo sed -i 's/PermitRootLogin without-password/PermitRootLogin forced-commands-only/g' /etc/ssh/sshd_config",
+        "sudo passwd -l root",
+        "sudo shred -n 50 -fuzv /etc/ssh/*_key /etc/ssh/*_key.pub",
+        "sudo find /root/.ssh -type f -exec shred -n 30 -z -u {} \\;",
+        "sudo find /home/{{user `ssh_username`}}/.ssh -type f -exec shred -n 30 -z -u {} \\;",
+        "sudo shred -n 50 -fuzv /var/log/wtmp",
+        "sudo shred -n 50 -fuzv /var/log/btmp",
+        "sudo shred -n 50 -fuzv /var/log/lastlog"
+      ]
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "output": "manifest.json",
+        "strip_path": true,
+        "type": "manifest"
+      }
+    ]
+  ]
+}

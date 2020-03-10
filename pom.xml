@@ -4,15 +4,15 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.7.RELEASE</version>
+		<version>2.2.4.RELEASE</version>
 	</parent>
-	<artifactId>filter-profile-registry</artifactId>
+	<artifactId>philter-profile-registry</artifactId>
 	<groupId>com.mtnfog</groupId>
 	<packaging>pom</packaging>
-	<version>1.0.0-SNAPSHOT</version>
-	<name>filter-profile-registry</name>
+	<version>1.1.0-SNAPSHOT</version>
+	<name>philter-profile-registry</name>
 	<url>http://www.mtnfog.com</url>
-	<description>Stores and manages filter profiles.</description>
+	<description>Stores and manages filter profiles for Philter.</description>
 	<inceptionYear>2019</inceptionYear>
 	<organization>
 		<name>Mountain Fog, Inc.</name>
@@ -55,7 +55,7 @@
 			</snapshots>
 			<id>central</id>
 			<name>Maven Central</name>
-			<url>http://repo1.maven.org/maven2</url>
+			<url>https://repo1.maven.org/maven2</url>
 		</repository>
 		<repository>
 			<id>maven-s3-release-repo</id>
@@ -75,9 +75,10 @@
 		</repository>
 	</repositories>
 	<modules>
-		<module>filter-profile-registry-app</module>
-		<module>filter-profile-registry-api</module>
-		<module>filter-profile-registry-services</module>
+		<module>philter-profile-registry-model</module>
+		<module>philter-profile-registry-app</module>
+		<module>philter-profile-registry-api</module>
+		<module>philter-profile-registry-services</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
@@ -94,22 +95,14 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<!-- Philter version -->
-		<philter.version>1.0.0-SNAPSHOT</philter.version>
+		<!-- Phileas version - only used for tests -->
+		<phileas.version>1.0.1</phileas.version>
 		<!-- Project dependency versions -->
-		<aws.version>1.11.620</aws.version>
-		<commons.collections4.version>4.4</commons.collections4.version>
+		<aws.version>1.11.724</aws.version>
 		<commons.io.version>2.6</commons.io.version>
-		<commons.math.version>3.6.1</commons.math.version>
-		<commons.text.version>1.7</commons.text.version>
-		<commons.validator.version>1.6</commons.validator.version>
-		<dropwizard-metrics-cloudwatch.version>1.0.13</dropwizard-metrics-cloudwatch.version>
 		<equals.verifier.version>3.1.9</equals.verifier.version>
 		<mockito.version>1.10.19</mockito.version>
-		<retrofit.version>2.6.1</retrofit.version>
-		<scala.major.version>2.12</scala.major.version>
-		<spring.boot.version>2.1.7.RELEASE</spring.boot.version>
-		<thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+		<spring.boot.version>2.2.4.RELEASE</spring.boot.version>
 		<!-- Sonarqube -->
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
@@ -119,27 +112,16 @@
 	<build>
 		<extensions>
 			<extension>
-				<groupId>org.springframework.build</groupId>
-				<artifactId>aws-maven</artifactId>
-				<version>5.0.0.RELEASE</version>
+				<groupId>com.gkatzioura.maven.cloud</groupId>
+				<artifactId>s3-storage-wagon</artifactId>
+				<version>2.3</version>
 			</extension>
 		</extensions>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.8.1</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<!--<release>11</release>-->
+					<release>11</release>
 				</configuration>
 			</plugin>
 			<plugin>

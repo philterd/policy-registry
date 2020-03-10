@@ -11,10 +11,8 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '30'))
     }
     parameters {
-        booleanParam(defaultValue: true, description: 'Build Docker image', name: 'isDocker')
+        booleanParam(defaultValue: false, description: 'Build and push Docker Image', name: 'isDocker')
         booleanParam(defaultValue: false, description: 'Build AMI', name: 'isAMI')
-        booleanParam(defaultValue: false, description: 'Build Azure VHD', name: 'isAzure')
-        booleanParam(defaultValue: true, description: 'Source Analysis', name: 'isAnalysis')
     }
     environment {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables
@@ -24,8 +22,6 @@ pipeline {
     stages {
         stage ('Initialize') {
             steps {
-                deleteDir()
-                checkout scm
                 sh '''
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
@@ -35,7 +31,7 @@ pipeline {
         stage ('Build') {
             steps {
                 sh "mvn -version"
-                sh "mvn -U license:aggregate-add-third-party license:aggregate-download-licenses install deploy -Dmaven.repo.local=${WORKSPACE}/.repository"
+                sh "mvn -U license:aggregate-add-third-party license:aggregate-download-licenses install deploy"
                 sh "./set-version.sh ${env.BUILD_NUMBER} ${env.VERSION}"
             }
         }

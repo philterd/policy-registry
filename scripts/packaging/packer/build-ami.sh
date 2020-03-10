@@ -53,9 +53,15 @@ if [ -f "manifest.json" ]; then
     aws ec2 run-instances --image-id $NEW_AMI --count 1 --instance-type t3.small --key-name mtnfog --security-group-ids sg-067151e722ec103fb --subnet-id subnet-1e9c8456
   fi
 
-  # Notify me the AMI creation is done.
-  #echo "Sending SNS completion notification..."
-  #aws sns publish --topic-arn "arn:aws:sns:us-east-1:341239660749:packer-ami-creation-completion" --message file://./packer.log --subject "$FORMATTED_PROJECT AMI $VERSION done"
+  # Put this build in the test queue.
+  aws sqs send-message \
+    --queue-url https://sqs.us-east-1.amazonaws.com/341239660749/philter-builds-tests-queue \
+    --message-body "{\"type\":\"ami\", \"id\":\"$NEW_AMI\", \"version\": \"$FULL_VERSION\", \"product\": \"$PROJECT\", \"buildnumber\": \"$BUILD_NUMBER\"}" \
+    --region us-east-1
+
+    # Notify me the creation is done.
+    aws sns publish --region us-east-1 --topic-arn "arn:aws:sns:us-east-1:341239660749:notify-me" \
+      --message "$FORMATTED_PROJECT $VERSION AWS AMI complete" --subject "$FORMATTED_PROJECT $VERSION AWS AMI complete"
 
   exit 0
 

@@ -16,7 +16,7 @@
     "built_by": "manual",
     "application": "",
     "project_name": "",
-    "local_user_name": "fpr"
+    "local_user_name": "philter"
   },
   "builders": [
     {
@@ -52,7 +52,8 @@
       "type": "shell",
       "inline": [
         "sudo yum -y upgrade",
-        "sudo yum -y install https://d3pxv6yz143wms.cloudfront.net/8.222.10.1/java-1.8.0-amazon-corretto-devel-1.8.0_222.b10-1.x86_64.rpm",
+        "# java-11-openjdk is available in Amazon Linux Extra topic \"java-openjdk11\"",
+        "sudo amazon-linux-extras install java-openjdk11",
         "sudo yum clean all"
       ]
     },

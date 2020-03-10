@@ -32,27 +32,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.basedir}/files</directory>
-									<filtering>false</filtering>
-									<includes>
-										<include>**/*.*</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
+				<version>3.1.0</version>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

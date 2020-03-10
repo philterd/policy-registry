@@ -13,6 +13,7 @@ pipeline {
     parameters {
         booleanParam(defaultValue: false, description: 'Build and push Docker Image', name: 'isDocker')
         booleanParam(defaultValue: false, description: 'Build AMI', name: 'isAMI')
+        booleanParam(defaultValue: false, description: 'Code Analysis', name: 'isAnalysis')
     }
     environment {
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables

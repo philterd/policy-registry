@@ -28,12 +28,7 @@ cp ../../../distribution/README.txt ./files/
 cp ../../../distribution/LICENSE.txt ./files/
 cp ../../../distribution/NOTICE.txt ./files/
 
-DOCKERHUB_PASSWORD=`aws ssm get-parameter --region us-east-1 --name dockerhub_password | jq -r .Parameter.Value`
-echo $DOCKERHUB_PASSWORD | docker login --username jzemerick --password-stdin
-
 echo "Building image mtnfog/$PROJECT:$FULL_VERSION"
 docker build -t mtnfog/$PROJECT:$FULL_VERSION .
-
-docker logout
 
 rm -rf ./files/

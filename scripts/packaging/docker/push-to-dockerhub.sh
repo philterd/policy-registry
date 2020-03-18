@@ -7,7 +7,7 @@ BUILD_NUMBER=$1
 VERSION=$2
 
 GIT_COMMIT=`git rev-parse --short HEAD`
-PROJECT="philter-profile-registry"
+PROJECT="filter-profile-registry"
 
 if [ -z "$VERSION" ]
 then

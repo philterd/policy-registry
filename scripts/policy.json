@@ -1,0 +1,23 @@
+{  
+   "name":"a-profile",
+   "identifiers":{  
+      "creditCard":{  
+         "creditCardFilterStrategy":{  
+            "strategy":"REDACT",
+            "redactionFormat":"{{{REDACTED-%t}}}"
+         }
+      },
+      "ipAddress":{  
+         "ipAddressFilterStrategy":{  
+            "strategy":"REDACT",
+            "redactionFormat":"{{{REDACTED-%t}}}"
+         }
+      },
+      "zipCode":{  
+         "zipCodeFilterStrategy":{  
+            "truncateDigits":2,
+            "strategy":"TRUNCATE"
+         }
+      }
+   }
+}

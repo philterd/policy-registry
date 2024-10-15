@@ -39,4 +39,3 @@ policies.store=local
 Licensed under the Apache License, version 2.0.
 
 Copyright 2024 Philterd, LLC
-Copyright 2019 Mountain Fog, Inc.

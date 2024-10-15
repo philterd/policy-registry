@@ -18,7 +18,7 @@
 				<filtering>true</filtering>
 				<directory>src/main/resources</directory>
 				<includes>
-					<include>internal.properties</include>
+					<include>application.properties</include>
 				</includes>
 			</resource>
 		</resources>
@@ -41,7 +41,7 @@
 					<executable>true</executable>
 					<finalName>policy-registry</finalName>
 					<layout>JAR</layout>
-					<mainClass>ai.philterd.philter.registry.FilterProfileRegistryApplication</mainClass>
+					<mainClass>ai.philterd.philter.registry.PolicyRegistryApplication</mainClass>
 				</configuration>
 				<executions>
 					<execution>

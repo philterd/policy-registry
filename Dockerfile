@@ -5,7 +5,7 @@ RUN mkdir -p /opt/policy-registry/ssl
 RUN mkdir -p /opt/policy-registry/policies
 
 COPY LICENSE.txt /opt/policy-registry/LICENSE.txt
-COPY README.txt /opt/policy-registry/README.txt
+COPY README.md /opt/policy-registry/README.md
 COPY distribution/policies/*.json /opt/policy-registry/
 COPY distribution/application.properties /opt/policy-registry/application.properties
 COPY ./policy-registry-app/target/policy-registry.jar /opt/policy-registry/policy-registry.jar

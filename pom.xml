@@ -88,19 +88,12 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<!-- Phileas version - only used for tests -->
 		<phileas.version>2.7.0</phileas.version>
-		<!-- Project dependency versions -->
-		<aws.version>1.12.772</aws.version>
 		<commons.io.version>2.17.0</commons.io.version>
 		<equals.verifier.version>3.1.9</equals.verifier.version>
+		<jgit.version>7.0.0.202409031743-r</jgit.version>
 		<mockito.version>5.14.1</mockito.version>
 		<spring.boot.version>3.3.4</spring.boot.version>
-		<!-- Sonarqube -->
-		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<sonar.jacoco.reportPath>${project.build.directory}/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.language>java</sonar.language>
 	</properties>
 	<build>
 		<extensions>
@@ -155,29 +148,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.3</version>
-				<configuration>
-					<destFile>${sonar.jacoco.reportPath}</destFile>
-					<append>true</append>
-				</configuration>
-				<executions>
-					<execution>
-						<id>agent</id>
-						<goals>
-							<goal>prepare-agent</goal>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<version>1.19</version>
 			</plugin>
 		</plugins>
 	</build>
